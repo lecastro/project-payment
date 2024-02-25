@@ -128,3 +128,10 @@ http://localhost:3000
 ```
 
 ![Alt text](test-front.png)
+
+## screen example
+
+test credit cards that should be used to test your application:
+<https://www.mercadopago.com.br/developers/pt/docs/your-integrations/test/cards>
+
+![Alt text](test-video-payment.gif)

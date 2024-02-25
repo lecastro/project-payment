@@ -77,7 +77,7 @@ export default function Home() {
           setNumberInstallment(numberInstallment);
         }
       } catch (error) {
-        console.error('Erro ao obter parcelas:', error);
+        console.error('Error getting installments:', error);
         setLoading(false);
       }
     }
@@ -101,8 +101,30 @@ export default function Home() {
       });
       return cardToken?.id;
     } catch (error) {
-      console.error('Erro gerar o token:', error);
+      console.error('Error generating token:', error);
       return undefined;
+    }
+  };
+
+  const sendPaymentDataToBackend = async (dataToSend: any) => {
+    try {
+      const response = await fetch('http://localhost/rest/payments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error processing payment.');
+      }
+
+      const responseData = await response.json();
+
+      console.log('Backend response:', responseData);
+    } catch (error) {
+      console.error('Error when making request to the backend:', error);
     }
   };
 
@@ -118,14 +140,14 @@ export default function Home() {
     const payerDataFilled = payerDataValues.every(value => value);
 
     if (!cardDataFilled && !payerDataFilled) {
-      console.error('Por favor, preencha todos os campos antes de efetuar o pagamento.');
+      console.error('Please fill in all fields before making payment.');
       return;
     }
 
     const tokenCard = await createToken(cardData, payerData);
 
     if (tokenCard == undefined) {
-      console.error('Erro, para criar token do cartão.');
+      console.error('Error, creating card token.');
       return;
     }
 
@@ -143,7 +165,9 @@ export default function Home() {
       }
     };
 
-    console.log('Dados do Pagador:', dataToSend);
+    console.log('Dados do Pagador:', JSON.stringify(dataToSend));
+
+    sendPaymentDataToBackend(dataToSend);
   }
 
   return (

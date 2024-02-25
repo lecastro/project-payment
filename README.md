@@ -46,6 +46,14 @@ docker exec -it app composer install
 docker exec -it app php artisan key:generate
 ```
 
+5. Generate migrate:
+
+```
+docker exec -it app php artisan migrate --seed
+```
+
+![Alt text](test-migrate.png)
+
 ## Database Configuration
 
 Ensure the test database is created. If not, you might need to create it manually:
@@ -82,6 +90,14 @@ npm: 10.2.4
 yarn: 1.22.21
 react: 0.1.0
 ```
+
+## Routes
+
+1. Create payment - POST - localhost/rest/payments
+2. List payment - GET - localhost/rest/payments
+3. View payment - GET - localhost/rest/payments{id}
+4. Confirm payment - PUT - localhost/rest/payments{id}/confirm
+5. Cancel a payment - PUT - localhost/rest/payments{id}/cancel
 
 ## Setting Up frontend
 
